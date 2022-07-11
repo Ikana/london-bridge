@@ -1,6 +1,10 @@
+from textwrap import dedent
+
 from airflow import DAG
 
-from airflow.operators.kubernetes_pod import KubernetesPodOperator
+from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
+    KubernetesPodOperator,
+)
 
 # Kubernetes airflow operator
 with DAG(
@@ -33,15 +37,3 @@ with DAG(
         ![img](http://montcs.bloomu.edu/~bobmon/Semesters/2012-01/491/import%20soul.png)
         """
     )
-    k8s_pod_operator.doc = "This is a test"
-    k8s_pod_operator.doc_rst = "This is a test"
-    k8s_pod_operator.doc_json = "This is a test"
-    k8s_pod_operator.doc_yaml = "This is a test"
-    k8s_pod_operator.doc_md = "This is a test"
-    k8s_pod_operator.doc_rst = "This is a test"
-    k8s_pod_operator.doc_json = "This is a test"
-    k8s_pod_operator.doc_yaml = "This is a test"
-    k8s_pod_operator.doc_md = "This is a test"
-    k8s_pod_operator.doc_rst = "This is a test"
-    k8s_pod_operator.doc_json = "This is a test"
-    k8s_pod_operator.doc_y
