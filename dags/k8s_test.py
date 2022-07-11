@@ -29,6 +29,7 @@ with DAG(
         labels={"foo": "bar"},
         startup_timeout_seconds=5,
         get_logs=True,
+        in_cluster=True,
         dag=dag,
     )
     k8s_pod_operator.doc_md = dedent(
