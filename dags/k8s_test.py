@@ -13,7 +13,8 @@ with DAG(
         "depends_on_past": False,
     },
     description="Tests of k8s operator",
-    tags=["example"]
+    tags=["example"],
+    schedule_interval=None,
 ) as dag:
     # kubernetes_pod_operator
     k8s_pod_operator = KubernetesPodOperator(
