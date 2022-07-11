@@ -15,18 +15,18 @@ with DAG(
     },
     description="Tests of k8s operator",
     tags=["example"],
-    start_date=datetime(2021, 1, 1),    
+    start_date=datetime(2021, 1, 1),
     schedule_interval=None,
 ) as dag:
     # kubernetes_pod_operator
     k8s_pod_operator = KubernetesPodOperator(
         task_id="k8s_pod_operator",
         name="k8s_pod_operator",
-        namespace="default",
+        namespace="airflow-10ff5c97",
         image="roikana/london-bridge-base:latest",
         cmds=["python", "-c"],
         arguments=["print('hello world')"],
-        labels={"foo": "bar"},
+        labels={"test": "test"},
         startup_timeout_seconds=5,
         get_logs=True,
         in_cluster=True,
