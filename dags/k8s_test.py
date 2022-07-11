@@ -1,4 +1,5 @@
 from textwrap import dedent
+from datetime import datetime
 
 from airflow import DAG
 
@@ -14,6 +15,7 @@ with DAG(
     },
     description="Tests of k8s operator",
     tags=["example"],
+    start_date=datetime(2021, 1, 1),    
     schedule_interval=None,
 ) as dag:
     # kubernetes_pod_operator
