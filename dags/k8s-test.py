@@ -4,7 +4,7 @@ from airflow.operators.kubernetes_pod import KubernetesPodOperator
 
 # Kubernetes airflow operator
 with DAG(
-    "k8s    ,
+    "k8s",
     default_args={
         "depends_on_past": False,
     },
