@@ -1,0 +1,1 @@
+apache-airflow[kubernetes]==2.3.3
