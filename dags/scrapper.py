@@ -15,25 +15,27 @@ from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import (
 
 key_id = Secret(
     # Expose the secret as environment variable.
-    deploy_type='env',
+    deploy_type="env",
     # The name of the environment variable, since deploy_type is `env` rather
     # than `volume`.
-    deploy_target='AWS_ACCESS_KEY_ID',
+    deploy_target="AWS_ACCESS_KEY_ID",
     # Name of the Kubernetes Secret
-    secret='cluster-50d1ce18',
+    secret="cluster-50d1ce18",
     # Key of a secret stored in this Secret object
-    key='AWS_ACCESS_KEY_ID')
+    key="AWS_ACCESS_KEY_ID",
+)
 
 secret_key = Secret(
     # Expose the secret as environment variable.
-    deploy_type='env',
+    deploy_type="env",
     # The name of the environment variable, since deploy_type is `env` rather
     # than `volume`.
-    deploy_target='AWS_SECRET_ACCESS_KEY',
+    deploy_target="AWS_SECRET_ACCESS_KEY",
     # Name of the Kubernetes Secret
-    secret='cluster-50d1ce18',
+    secret="cluster-50d1ce18",
     # Key of a secret stored in this Secret object
-    key='AWS_SECRET_ACCESS_KEY')
+    key="AWS_SECRET_ACCESS_KEY",
+)
 
 # Kubernetes airflow operator
 with DAG(

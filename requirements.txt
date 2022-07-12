@@ -2,4 +2,6 @@ apache-airflow==2.3.3
 apache-airflow[kubernetes]==2.3.3
 beautifulsoup4
 boto3
-requests2
+requests
+black
+flake8
