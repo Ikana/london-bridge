@@ -22,7 +22,7 @@ key_id = Secret(
     # Name of the Kubernetes Secret
     secret='cluster-50d1ce18',
     # Key of a secret stored in this Secret object
-    key='sAWS_ACCESS_KEY_ID')
+    key='AWS_ACCESS_KEY_ID')
 
 secret_key = Secret(
     # Expose the secret as environment variable.
