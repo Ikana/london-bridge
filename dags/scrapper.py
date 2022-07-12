@@ -58,7 +58,7 @@ with DAG(
         startup_timeout_seconds=5,
         get_logs=True,
         in_cluster=True,
-        secret=[key_id, secret_key],
+        secrets=[key_id, secret_key],
         dag=dag,
     )
     k8s_pod_operator.doc_md = dedent(
