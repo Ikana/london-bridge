@@ -1,3 +1,7 @@
+"""
+Scram data from the UK government website.
+"""
+
 from textwrap import dedent
 from datetime import datetime
 
@@ -29,7 +33,7 @@ secret_key = Secret(
     # Name of the Kubernetes Secret
     secret='cluster-50d1ce18',
     # Key of a secret stored in this Secret object
-    key='AWS_SECRET_ACCESS_KEY')    
+    key='AWS_SECRET_ACCESS_KEY')
 
 # Kubernetes airflow operator
 with DAG(
@@ -47,7 +51,7 @@ with DAG(
         task_id="scrapper",
         name="scrapper",
         namespace="airflow-10ff5c97",
-        image="roikana/london-bridge-base:latest",
+        image="roikana/london-bridge-scrapper:latest",
         cmds=["python"],
         arguments=["exec.py"],
         labels={"purpose": "scrapper"},
