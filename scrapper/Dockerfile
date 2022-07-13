@@ -1,3 +1,3 @@
 FROM roikana/london-bridge-base:latest
 
-COPY exec.py .
+COPY run.py .
