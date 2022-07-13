@@ -5,7 +5,7 @@ using beautifulsoup4 and requests
 import sys
 import os
 import json
-import io
+from io import StringIO
 
 from typing import TypedDict, List, Union
 
@@ -61,7 +61,7 @@ def get_cvs_links() -> List[str]:
         return links
 
 
-def download_links(links: List[str], session=requests.session()) -> List[bytes]:
+def download_links(links: List[str], session=requests.session()) -> List[str]:
     """
     Download the links
     """
@@ -73,20 +73,21 @@ def download_links(links: List[str], session=requests.session()) -> List[bytes]:
         if response.status_code != 200:
             print(f"Error: Could not download {link}")
             sys.exit(1)
-        # converte the response content to string
-        content.append(response.content)
+        # convert the response content to string
+        string = response.content.decode("utf-8")
+        content.append(string)
 
     return content
 
 
-def convert_csv_to_parquet(content: bytes) -> bytes:
+def convert_csv_to_parquet(content: str) -> str:
     """
     Convert csv to parquet
     """
     # convert csv to parquet using pandas and pyarrow
 
     # read the bytes to csv using pandas
-    df_local = pd.read_csv(io.StringIO(content.decode("utf-8")), encoding="utf8")
+    df_local = pd.read_csv(StringIO(content), encoding="utf8")
 
     # convert the dataframe to parquet
     table = pa.Table.from_pandas(df_local)

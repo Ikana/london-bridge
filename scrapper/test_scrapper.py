@@ -45,7 +45,7 @@ def test_download_links():
     content = download_links(links, session)
 
     assert isinstance(content, list)
-    assert all(isinstance(link, bytes) for link in content)
+    assert all(isinstance(link, str) for link in content)
 
 
 def test_convert_csv_to_parquet():
@@ -72,7 +72,7 @@ def test_convert_csv_to_parquet():
 
     response = session.get(link)
 
-    parquet = convert_csv_to_parquet(response.content)
+    parquet = convert_csv_to_parquet(response.content.decode("utf-8"))
 
     assert isinstance(parquet, bytes)
 
