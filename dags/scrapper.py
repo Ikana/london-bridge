@@ -60,6 +60,7 @@ with DAG(
         startup_timeout_seconds=5,
         env_vars={
             "AWS_ROLE": "arn:aws:iam::110545266047:role/projectKnowledgeRepo-s3-0105794",
+            "AWS_BUCKET": "projectknowledgerepo-data-c45c573",
         },
         get_logs=True,
         in_cluster=True,

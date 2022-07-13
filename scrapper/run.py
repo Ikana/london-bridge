@@ -7,7 +7,7 @@ import os
 import json
 import io
 
-from typing import TypedDict, List
+from typing import TypedDict, List, Union
 
 import boto3
 import requests
@@ -26,7 +26,7 @@ class AuthResponse(TypedDict):
     aws_session_token: str
 
 
-def authenticate(role: str) -> AuthResponse | None:
+def authenticate(role: str) -> Union[AuthResponse, None]:
     """
     Authenticate to aws assuming role using sts
     """
