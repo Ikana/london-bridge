@@ -30,8 +30,10 @@ def test_convert_csv_to_parquet():
     """
     # assert converst the csv to parquet
 
-    link = "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1002058/" \
+    link = (
+        "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1002058/"
         "HO_Government_Major_Projects_Portofolio_Data_March_2021.csv"
+    )
 
     parquet = convert_csv_to_parquet(link)
 
@@ -49,10 +51,10 @@ def test_store_data_in_s3():
     """
 
     links = [
-        "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1002058/" \
-            "HO_Government_Major_Projects_Portofolio_Data_March_2021.csv",
-        "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1002101/" \
-            "MOJ_Government_Major_Projects_Portofolio_Data_March_2021.csv",
+        "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1002058/"
+        "HO_Government_Major_Projects_Portofolio_Data_March_2021.csv",
+        "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1002101/"
+        "MOJ_Government_Major_Projects_Portofolio_Data_March_2021.csv",
     ]
 
     conn = boto3.resource("s3", region_name="us-east-1")
