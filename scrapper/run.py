@@ -5,12 +5,10 @@ using beautifulsoup4 and requests
 import sys
 import os
 import json
-from io import StringIO
 
 from typing import TypedDict, List, Union
 
 import boto3
-import requests
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -54,40 +52,20 @@ def get_cvs_links() -> List[str]:
     """
     Get the link to the csv file
     """
-    # get current directory
     current_dir = os.path.dirname(os.path.abspath(__file__))
     with open(f"{current_dir}/dataFiles.json", encoding="utf8") as file:
         links = json.load(file)
         return links
 
 
-def download_links(links: List[str], session=requests.session()) -> List[str]:
-    """
-    Download the links
-    """
-    content = []
-    # download the csv files
-    for link in links:
-        print(f"Downloading {link}")
-        response = session.get(link)
-        if response.status_code != 200:
-            print(f"Error: Could not download {link}")
-            sys.exit(1)
-        # convert the response content to string
-        string = response.content.decode("utf-8")
-        content.append(string)
-
-    return content
-
-
-def convert_csv_to_parquet(content: str) -> str:
+def convert_csv_to_parquet(link: str) -> str:
     """
     Convert csv to parquet
     """
     # convert csv to parquet using pandas and pyarrow
 
     # read the bytes to csv using pandas
-    df_local = pd.read_csv(StringIO(content), encoding="utf8")
+    df_local = pd.read_csv(link)
 
     # convert the dataframe to parquet
     table = pa.Table.from_pandas(df_local)
@@ -105,20 +83,18 @@ def convert_csv_to_parquet(content: str) -> str:
     return data
 
 
-def store_data_in_s3(
-    content: List[bytes], links: List[str], bucket: str, credentials: AuthResponse
-):
+def store_data_in_s3(links: List[str], bucket: str, credentials: AuthResponse):
     """
     Store the data in s3
     """
     s3_client = boto3.client("s3", **credentials)
-    for i, file in enumerate(content):
+    for link in links:
 
         # convert csv to parquet
-        parquet_file = convert_csv_to_parquet(file)
+        parquet_file = convert_csv_to_parquet(link)
 
         # get the file name from the link
-        file_name = links[i].split("/")[-1]
+        file_name = link.split("/")[-1]
 
         # remove csv extension and add parquet extension
         file_name = file_name.replace(".csv", ".parquet")
@@ -160,9 +136,7 @@ def main():
 
     links = get_cvs_links()
 
-    content = download_links(links)
-
-    store_data_in_s3(content, links, bucket, credentials)
+    store_data_in_s3(links, bucket, credentials)
 
 
 if __name__ == "__main__":
