@@ -57,7 +57,7 @@ with DAG(
         cmds=["python"],
         arguments=["run.py"],
         labels={"pythonVersion": "3.10"},
-        startup_timeout_seconds=5,
+        startup_timeout_seconds=120,
         env_vars={
             "AWS_ROLE": "arn:aws:iam::110545266047:role/projectKnowledgeRepo-s3-0105794",
             "AWS_BUCKET": "projectknowledgerepo-data-c45c573",
