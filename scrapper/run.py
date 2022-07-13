@@ -54,8 +54,9 @@ def get_cvs_links() -> List[str]:
     """
     Get the link to the csv file
     """
-    # read json file and get the links
-    with open("dataFiles.json", encoding="utf8") as file:
+    # get current directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    with open(f"{current_dir}/dataFiles.json", encoding="utf8") as file:
         links = json.load(file)
         return links
 
@@ -109,7 +110,7 @@ def store_data_in_s3(
     """
     Store the data in s3
     """
-    s3 = boto3.client("s3", **credentials)
+    s3_client = boto3.client("s3", **credentials)
     for i, file in enumerate(content):
 
         # convert csv to parquet
@@ -122,7 +123,7 @@ def store_data_in_s3(
         file_name = file_name.replace(".csv", ".parquet")
 
         print(f"Storing {file_name} in {bucket}")
-        s3.put_object(Bucket=bucket, Key=f"raw/{file_name}", Body=parquet_file)
+        s3_client.put_object(Bucket=bucket, Key=f"raw/{file_name}", Body=parquet_file)
 
 
 def main():
