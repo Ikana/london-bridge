@@ -1,1 +1,2 @@
 apache-airflow[kubernetes]==2.3.3
+apache-airflow[statsd]==2.3.3
