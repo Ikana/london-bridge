@@ -103,9 +103,9 @@ def store_data_in_s3(links: List[str], bucket: str, credentials: AuthResponse):
 
             print(f"Storing {file_name} in {bucket}")
             s3_client.put_object(Bucket=bucket, Key=f"raw/{file_name}", Body=parquet_file)
-        except Exception as e:
+        except UnicodeDecodeError as error:
             s3_client.put_object(Bucket=bucket, Key=f"dlq/{file_name}/link", Body=link)
-            s3_client.put_object(Bucket=bucket, Key=f"dlq/{file_name}/error", Body=str(e))
+            s3_client.put_object(Bucket=bucket, Key=f"dlq/{file_name}/error", Body=str(error))
 
 
 
