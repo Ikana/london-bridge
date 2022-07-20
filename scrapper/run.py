@@ -89,18 +89,25 @@ def store_data_in_s3(links: List[str], bucket: str, credentials: AuthResponse):
     """
     s3_client = boto3.client("s3", **credentials)
     for link in links:
+        # catch the exception if the link is not valid
+        try:
+            
+            # convert csv to parquet
+            parquet_file = convert_csv_to_parquet(link)
 
-        # convert csv to parquet
-        parquet_file = convert_csv_to_parquet(link)
+            # get the file name from the link
+            file_name = link.split("/")[-1]
 
-        # get the file name from the link
-        file_name = link.split("/")[-1]
+            # remove csv extension and add parquet extension
+            file_name = file_name.replace(".csv", ".parquet")
 
-        # remove csv extension and add parquet extension
-        file_name = file_name.replace(".csv", ".parquet")
+            print(f"Storing {file_name} in {bucket}")
+            s3_client.put_object(Bucket=bucket, Key=f"raw/{file_name}", Body=parquet_file)
+        except Exception as e:
+            s3_client.put_object(Bucket=bucket, Key=f"dlq/{file_name}/link", Body=link)
+            s3_client.put_object(Bucket=bucket, Key=f"dlq/{file_name}/error", Body=str(e))
 
-        print(f"Storing {file_name} in {bucket}")
-        s3_client.put_object(Bucket=bucket, Key=f"raw/{file_name}", Body=parquet_file)
+
 
 
 def main():
